@@ -1,0 +1,27 @@
+Pobieranie tekstu i liczb od graczy:
+  Gra wymaga podania imion oraz wpisania odpowiedzi A, B, C,
+  a tak¿e prosi o podanie liczby graj¹cych i pytañ w rundzie.
+
+Wykorzystanie co najmniej trzech zmiennych:
+  numberOfPlayers - przechowuje liczbê graczy;
+  numberOfQuestions - przechowuje liczbê pytañ wybran¹ przez graczy;
+  playerAnswer - przechowuje odpowiedŸ gracza na pytanie.
+
+Wykorzystanie bardziej z³o¿onych warunków:
+  Wydaje mi siê, pêtla while z warunkami sprawdzaj¹cymi
+  czy odpowiedŸ jest 'A', 'B' lub 'C') tutaj siê wpasowuje.
+
+Modyfikowanie wartoœci zmiennych, przechowuj¹cych liczby:
+  Na przyk³ad zmienne numberOfPlayers i numberOfQuestions s¹ modyfikowane,
+  gdy u¿ytkownik wprowadza nowe wartoœci.
+
+Warunki z porównywaniem liczb:
+  Gra porównywnuje odpowiedzi graczy z prawid³owymi odpowiedziami:
+
+  if (playerAnswer == validAnswersIndex[questionIndex])
+{
+    playerPoints[j, 0]++;
+}
+
+Takie rzeczy jak wyœwietlanie tekstu, wykorzystanie random, warunki "if"
+czy obecnoœæ pêtli s¹ myœlê zauwa¿alne.
