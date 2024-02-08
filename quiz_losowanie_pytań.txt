@@ -39,7 +39,7 @@ class Program
 
     static void Main(string[] args)
     {
-        Console.WriteLine("Witajcie w grze!");
+        Console.WriteLine("Witajcie w grze-quiz! ");
 
         bool continuation = true;
         int numberOfPlayers = AskNumberOfPlayers();
@@ -52,7 +52,7 @@ class Program
             playerNames.Add(playerName);
         }
 
-        Console.WriteLine($"Witajcie {string.Join(" i ", playerNames)}! Rozpoczynamy grê.");
+        Console.WriteLine($"{string.Join(" i ", playerNames)}, rozpocznijmy grê!");
 
         while (continuation)
         {
@@ -60,8 +60,7 @@ class Program
             int numberOfQuestions;
             while (!int.TryParse(Console.ReadLine(), out numberOfQuestions) || numberOfQuestions <= 0 || numberOfQuestions > questions.Length)
             {
-                Console.WriteLine("Nieprawid³owa liczba pytañ. Wpisz liczbê z zakresu od 1 do {0}.", questions.Length);
-                Console.Write("Na ile pytañ chcecie odpowiedzieæ? ");
+                Console.WriteLine("Nieprawid³owa liczba pytañ. Wpisz proszê liczbê z zakresu od 1 do {0}.", questions.Length);
             }
 
             int[,] playerPoints = new int[numberOfPlayers, 1];
@@ -82,7 +81,7 @@ class Program
 
                 for (int j = 0; j < numberOfPlayers; j++)
                 {
-                    Console.Write($"{playerNames[j]}, wybierz odpowiedŸ (A, B, C): ");
+                    Console.Write($"{playerNames[j]}, wybierz odpowiedŸ: ");
                     string playerAnswer = Console.ReadLine().ToUpper();
                     while (playerAnswer != "A" && playerAnswer != "B" && playerAnswer != "C")
                     {
@@ -114,14 +113,14 @@ class Program
         int numberOfPlayers;
         while (true)
         {
-            Console.Write("Ilu graczy bierze udzia³ (maksymalnie 5)? ");
+            Console.Write("Wpisz liczbê graczy (maksymalnie 5): ");
             if (int.TryParse(Console.ReadLine(), out numberOfPlayers) && numberOfPlayers >= 1 && numberOfPlayers <= 5)
             {
                 break;
             }
             else
             {
-                Console.WriteLine("Nieprawid³owa liczba graczy. Wpisz liczbê z zakresu od 1 do 5.");
+                Console.WriteLine("Nieprawid³owa liczba graczy. Wpisz proszê liczbê z zakresu od 1 do 5.");
             }
         }
         return numberOfPlayers;
