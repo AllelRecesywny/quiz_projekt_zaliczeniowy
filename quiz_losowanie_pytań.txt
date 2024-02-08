@@ -1,0 +1,129 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+class Program
+{
+    private static string[] questions = new string[]
+    {
+        "Jaka jest stolica Francji?",
+        "Które zwierzê jest najszybsze na œwiecie?",
+        "Ile wynosi pierwiastek kwadratowy z 16?",
+        "Kto napisa³ tragediê 'Romeo i Julia'?",
+        "Który pierwiastek chemiczny ma symbol 'O'?",
+        "W którym roku rozpoczê³a siê II wojna œwiatowa?",
+        "Ile wynosi 2 do potêgi 5?",
+        "Kto malowa³ obraz 'Mona Lisa'?",
+        "Jak nazywa siê najwiêksza planeta Uk³adu S³onecznego?",
+        "Które zwierzê jest uwa¿ane za symbol Chin?"
+    };
+
+    private static string[][] answers = new string[][]
+    {
+        new string[] { "A) Pary¿", "B) Londyn", "C) Berlin" },
+        new string[] { "A) gepard", "B) gazela", "C) struœ" },
+        new string[] { "A) 2", "B) 4", "C) 8" },
+        new string[] { "A) William Shakespeare", "B) Charles Dickens", "C) Jane Austen" },
+        new string[] { "A) Tlen", "B) Wêgiel", "C) Azot" },
+        new string[] { "A) 1939", "B) 1941", "C) 1945" },
+        new string[] { "A) 16", "B) 32", "C) 64" },
+        new string[] { "A) Leonardo da Vinci", "B) Michelangelo", "C) Pablo Picasso" },
+        new string[] { "A) Jowisz", "B) Saturn", "C) Neptun" },
+        new string[] { "A) Panda", "B) Smok", "C) Tygrys" }
+    };
+
+    private static string[] validAnswersIndex = new string[]
+    {
+        "A", "A", "B", "A", "A", "A", "C", "A", "A", "B"
+    };
+
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Witajcie w grze!");
+
+        bool continuation = true;
+        int numberOfPlayers = AskNumberOfPlayers();
+        List<string> playerNames = new List<string>();
+
+        for (int i = 1; i <= numberOfPlayers; i++)
+        {
+            Console.Write($"Graczu {i}, podaj swoje imiê: ");
+            string playerName = Console.ReadLine();
+            playerNames.Add(playerName);
+        }
+
+        Console.WriteLine($"Witajcie {string.Join(" i ", playerNames)}! Rozpoczynamy grê.");
+
+        while (continuation)
+        {
+            Console.Write("Na ile pytañ chcecie odpowiedzieæ? (maksymalnie 10): ");
+            int numberOfQuestions;
+            while (!int.TryParse(Console.ReadLine(), out numberOfQuestions) || numberOfQuestions <= 0 || numberOfQuestions > questions.Length)
+            {
+                Console.WriteLine("Nieprawid³owa liczba pytañ. Wpisz liczbê z zakresu od 1 do {0}.", questions.Length);
+                Console.Write("Na ile pytañ chcecie odpowiedzieæ? ");
+            }
+
+            int[,] playerPoints = new int[numberOfPlayers, 1];
+            List<int> availableQuestions = Enumerable.Range(0, questions.Length).ToList();
+            Random random = new Random();
+
+            for (int i = 0; i < numberOfQuestions; i++)
+            {
+                int randomIndex = random.Next(availableQuestions.Count);
+                int questionIndex = availableQuestions[randomIndex];
+                availableQuestions.RemoveAt(randomIndex);
+
+                Console.WriteLine($"\n{questions[questionIndex]}");
+                foreach (string answer in answers[questionIndex])
+                {
+                    Console.WriteLine(answer);
+                }
+
+                for (int j = 0; j < numberOfPlayers; j++)
+                {
+                    Console.Write($"{playerNames[j]}, wybierz odpowiedŸ (A, B, C): ");
+                    string playerAnswer = Console.ReadLine().ToUpper();
+                    while (playerAnswer != "A" && playerAnswer != "B" && playerAnswer != "C")
+                    {
+                        Console.Write($"{playerNames[j]}, wybierz odpowiedŸ (A, B, C): ");
+                        playerAnswer = Console.ReadLine().ToUpper();
+                    }
+
+                    if (playerAnswer == validAnswersIndex[questionIndex])
+                    {
+                        playerPoints[j, 0]++;
+                    }
+                }
+            }
+
+            Console.WriteLine("\nWyniki koñcowe:");
+            for (int i = 0; i < numberOfPlayers; i++)
+            {
+                Console.WriteLine($"{playerNames[i]} - {playerPoints[i, 0]} punktów");
+            }
+
+            Console.Write("\nCzy chcecie zagraæ jeszcze raz? (Tak/Nie): ");
+            string continuationAnswer = Console.ReadLine().ToLower();
+            continuation = continuationAnswer == "tak" || continuationAnswer == "ta" || continuationAnswer == "t";
+        }
+    }
+
+    static int AskNumberOfPlayers()
+    {
+        int numberOfPlayers;
+        while (true)
+        {
+            Console.Write("Ilu graczy bierze udzia³ (maksymalnie 5)? ");
+            if (int.TryParse(Console.ReadLine(), out numberOfPlayers) && numberOfPlayers >= 1 && numberOfPlayers <= 5)
+            {
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Nieprawid³owa liczba graczy. Wpisz liczbê z zakresu od 1 do 5.");
+            }
+        }
+        return numberOfPlayers;
+    }
+}
